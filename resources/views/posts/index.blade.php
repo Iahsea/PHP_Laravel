@@ -3,6 +3,16 @@
 @section('content')
 <div class="container">
     <h1 class="my-4 text-center">Danh sách bài viết</h1>
+
+    <!-- Hiển thị thông báo thành công -->
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     
     <div class="text-right mb-3">
         <a href="{{ route('posts.create') }}" class="btn btn-success">
