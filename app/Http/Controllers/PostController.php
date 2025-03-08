@@ -45,6 +45,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        $post->loadCount('likes'); // Đếm số lượt like
         return view('posts.show', compact('post'));
     }
 

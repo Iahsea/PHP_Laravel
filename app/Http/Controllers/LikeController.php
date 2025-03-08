@@ -10,19 +10,23 @@ use Illuminate\Support\Facades\Auth;
 class LikeController extends Controller
 {
 
-    public function likePost(Request $request)
+    public function toggleLike(Request $request)
     {
-        $post = Post::findOrFail($request->post_id);
         $user = Auth::user();
+        $post = Post::findOrFail($request->post_id);
 
-        $like = Like::where('post_id', $post->id)->where('user_id', $user->id)->first();
+        // Kiểm tra xem user đã like bài viết chưa
+        $like = Like::where('user_id', $user->id)->where('post_id', $post->id)->first();
 
         if ($like) {
-            $like->delete();
-            return response()->json(['liked' => false, 'like_count' => $post->likes()->count()]);
+            $like->delete(); // Nếu đã like thì bỏ like
+            return response()->json(['message' => 'Unlike thành công!', 'liked' => false, 'likes_count' => $post->likes()->count()]);
         } else {
-            Like::create(['post_id' => $post->id, 'user_id' => $user->id]);
-            return response()->json(['liked' => true, 'like_count' => $post->likes()->count()]);
+            Like::create([
+                'user_id' => $user->id,
+                'post_id' => $post->id
+            ]);
+            return response()->json(['message' => 'Like thành công!', 'liked' => true, 'likes_count' => $post->likes()->count()]);
         }
     }
 
