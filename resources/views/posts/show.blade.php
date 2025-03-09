@@ -26,6 +26,24 @@
                     </span>
                 </div>
 
+                <!-- Phần comment -->
+
+                <div class="comments-section">
+                    <h4>Bình luận</h4>
+                    <ul id="comment-list">
+                        @foreach($post->comments as $comment)
+                            <li><strong>{{ $comment->user->name }}:</strong> {{ $comment->content }}</li>
+                        @endforeach
+                    </ul>
+                
+                    @auth
+                        <textarea id="comment-content" class="form-control" placeholder="Viết bình luận..."></textarea>
+                        <button id="submit-comment" class="btn btn-primary mt-2" data-post-id="{{ $post->id }}">Gửi</button>
+                    @endauth
+                </div>
+                
+
+
                 <!-- Hiển thị thời gian đăng bài -->
                 <p class="text-muted"><i class="far fa-calendar-alt"></i> Đăng ngày:
                     {{ $post->created_at->format('d/m/Y') }}</p>

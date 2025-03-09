@@ -18,7 +18,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="{{ asset('js/like.js') }}"></script>
+    {{-- <script src="{{ asset('js/like.js') }}"></script>
+    <script src="{{ asset('js/comment.js') }}"></script> --}}
 
 
 
@@ -125,6 +126,37 @@
             });
         });
     </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#submit-comment').click(function() {
+                let postId = $(this).data('post-id'); // Lấy post_id từ button
+                let commentContent = $('#comment-content').val(); // Lấy nội dung bình luận
+
+                $.ajax({
+                    url: "/posts/" + postId + "/comment",
+                    type: "POST",
+                    data: {
+                        post_id: postId,
+                        content: commentContent
+                    },
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        alert("Bình luận đã được thêm!");
+                        location.reload();
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+            });
+        });
+    </script>
+
+
 
 </body>
 

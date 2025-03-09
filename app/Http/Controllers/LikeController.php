@@ -12,6 +12,11 @@ class LikeController extends Controller
 
     public function toggleLike(Request $request)
     {
+
+        if (!Auth::check()) {
+            return response()->json(['error' => 'Bạn cần đăng nhập để like bài viết!'], 401);
+        }
+
         $user = Auth::user();
         $post = Post::findOrFail($request->post_id);
 

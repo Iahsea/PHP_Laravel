@@ -17,10 +17,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/like', [LikeController::class, 'toggleLike'])->name('like.toggle');
 });
 
-// Route::middleware(['auth'])->group(function () {
-//     Route::post('/posts/{post}/like', [LikeController::class, 'likeOrUnlike'])->name('posts.like');
-//     // Route::post('/comment', [CommentController::class, 'store'])->name('comment.store');
-// });
+Route::post('/posts/{post}/comment', [CommentController::class, 'store'])->middleware('auth');
 
 Auth::routes();
 
